@@ -6,13 +6,31 @@ export default {
   routes: [
     {
       path: '/', // 首页
-      redirect: '/home/personal.vue'
+      redirect: '/login/login.vue'
+    },
+    {
+      path: '/readme',
+      component: resolve => require(['./pages/home/personal.vue'], resolve),
+      children:[
+        {
+          path: '/',
+          component: resolve => require(['./pages/Readme/Readme.vue'], resolve)
+        },
+        {
+          path: '/basetable',
+          component: resolve => require(['./pages/List/list.vue'], resolve)
+        },
+        {
+          path: '/baseform',
+          component: resolve => require(['./pages/form/form.vue'], resolve)
+        }
+      ]
     },
     {
       name: 'home', // 登录页
       path: '/home',
       component: function (resolve) {
-        require(['./pages/home/personal.vue'], resolve);
+        require(['./pages/login/login.vue'], resolve);
       }
     },
     {
@@ -25,6 +43,13 @@ export default {
       component: function (resolve) {
         require(['./pages/404.vue'], resolve);
       }
-    }
+    },
+    {
+      name: 'form', //form
+      path: '/form',
+      component: function (resolve) {
+        require(['./pages/form/form.vue'], resolve);
+      }
+    },
   ]
 };

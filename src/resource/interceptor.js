@@ -15,12 +15,9 @@ export default function (App) {
 	// 通用loading
 	let loading = function (request, next) {
 		count++;
-		// App.$broadcast('show-loading');
-
 		next(function () {
 			count--;
 			if (!count) {
-				// App.$broadcast('hide-loading');
 			}
 		});
 	};
