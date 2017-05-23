@@ -30,7 +30,7 @@
       <el-pagination
         @current-change ="handleCurrentChange"
         layout="prev, pager, next"
-        :total="1000">
+        :total="1">
       </el-pagination>
     </div>
   </div>
@@ -73,15 +73,10 @@
 //              this.$store.commit("hideLoading");
           });
       },
-      formatter(row, column) {
-        return row.address;
-      },
-      filterTag(value, row) {
-        return row.tag === value;
-      },
       handleEdit(index, row) {
           console.log(index,row);
         this.$message('编辑第'+(index+1)+'行');
+
       },
       handleDelete(index, row) {
         console.log(index,row);

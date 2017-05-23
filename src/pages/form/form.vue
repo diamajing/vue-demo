@@ -1,91 +1,119 @@
 <template>
   <div class="form-test">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="活动名称" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
-      </el-form-item>
-      <el-form-item label="活动区域" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="活动时间" required>
-        <el-col :span="11">
-          <el-form-item prop="date1">
-            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+      <el-form-item>
+        <el-col :span="18">
+          <el-form-item label="公司名称" required prop="companyName">
+            <el-input class="wid_60" type="text" placeholder="公司名称" v-model="ruleForm.companyName"></el-input>
           </el-form-item>
         </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-form-item prop="date2">
-            <el-time-picker type="fixed-time" placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%;"></el-time-picker>
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送" prop="delivery">
-        <el-switch on-text="" off-text="" v-model="ruleForm.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质" prop="type">
-        <el-checkbox-group v-model="ruleForm.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源" prop="resource">
-        <el-radio-group v-model="ruleForm.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式" prop="desc">
-        <el-input type="textarea" v-model="ruleForm.desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-col :span="10">
+          <el-form-item label="出发日期" prop="takeOffDate">
+            <div class="block">
+              <el-date-picker
+                v-model="ruleForm.takeOffDate"
+                placeholder="选择出发日期"
+                type="date"
+                :picker-options="takeOffOptions">
+              </el-date-picker>
+            </div>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+        <el-form-item label="到达日期" prop="arrivalDate">
+          <div class="block">
+            <el-date-picker
+              v-model="ruleForm.arrivalDate"
+              type="date"
+              placeholder="选择到达日期"
+              :picker-options="arrivalOptions">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item>
+        <el-col :span="10">
+          <el-form-item label="出发机场" required prop="name1">
+            <el-input type="text" class="wid_60" placeholder="出发机场" v-model="ruleForm.takeOffStnName"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item label="到达机场" required prop="name2">
+            <el-input type="text" class="wid_60" placeholder="到达机场" v-model="ruleForm.arriveStnName"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item>
+        <el-col :span="24">
+          <el-form-item label="即时配送" prop="delivery">
+            <el-switch on-text="" off-text="" v-model="ruleForm.delivery"></el-switch>
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item>
+        <el-col :span="24">
+        <el-form-item label="配置开关" required>
+          <el-radio-group v-model="ruleForm.configBtn">
+            <el-radio label="1">开</el-radio>
+            <el-radio label="0">关</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
+  import moment from "moment";
   export default {
     data() {
+        let self = this;
       return {
+        takeOffOptions: {
+          disabledDate(time) {
+              let bool1= time.getTime()>moment(self.ruleForm.arrivalDate);
+              let bool2=  time.getTime() < Date.now() - 8.64e7;
+            return bool1 || bool2;
+          },
+        },
+        arrivalOptions: {
+          disabledDate(time) {
+            let bool1= time.getTime()<moment(self.ruleForm.takeOffDate);
+            let bool2=  time.getTime() < Date.now() - 8.64e7;
+            return bool1 || bool2;
+          },
+        },
         ruleForm: {
+          companyName:'',
+          takeOffStnName:'',
+          takeOffDate:'',
+          arriveStnName:'',
+          arrivalDate:'',
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
           delivery: false,
           type: [],
-          resource: '',
-          desc: ''
+          configBtn: '1',
         },
         rules: {
-          name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          companyName: [
+            { required: true, message: '请输入公司名称', trigger: 'blur' },
+            { min: 5, max: 20, message: '长度在 5 到 20 个字符', trigger: 'blur' }
           ],
-          region: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
-          ],
-          date1: [
+          takeOffDate: [
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
           ],
-          date2: [
-            { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+          arrivalDate: [
+            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
           ],
           type: [
             { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-          ],
-          resource: [
-            { required: true, message: '请选择活动资源', trigger: 'change' }
-          ],
-          desc: [
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
           ]
         }
       };
@@ -108,9 +136,15 @@
   };
 </script>
 <style lang="scss" scoped>
+  .el-form-item .el-form-item .el-form-item__content {
+    margin-left: 0!important;
+  }
   .form-test{
-    width: 45%;
-    margin: auto;
+    width: 70%;
+
+    .wid_60{
+      width: 60%;
+    }
   }
 
 </style>
