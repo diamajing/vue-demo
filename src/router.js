@@ -17,12 +17,19 @@ export default {
           component: resolve => require(['./pages/Readme/Readme.vue'], resolve)
         },
         {
+          name:"basetable",
           path: '/basetable',
           component: resolve => require(['./pages/List/list.vue'], resolve)
         },
         {
-          path: '/baseform',
+          name:'baseform',
+          path: '/baseform/:orderId',
           component: resolve => require(['./pages/form/form.vue'], resolve)
+        },
+        {
+          name:'basecharts',
+          path: '/basecharts',
+          component: resolve => require(['./pages/chart/chart.vue'], resolve)
         }
       ]
     },

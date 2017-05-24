@@ -1,95 +1,79 @@
 <template>
-    <div class="sidebar">
-        <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
-            <template v-for="item in items">
-                <template v-if="item.subs">
-                    <el-submenu :index="item.index">
-                        <template slot="title"><i class="el-icon-menu"></i>{{ item.title }}</template>
-                        <el-menu-item v-for="(subItem,i) in item.subs" :key="i" :index="subItem.index">{{ subItem.title }}
-                        </el-menu-item>
-                    </el-submenu>
-                </template>
-                <template v-else>
-                    <el-menu-item :index="item.index">
-                        <i class="el-icon-setting"></i>{{ item.title }}
-                    </el-menu-item>
-                </template>
-            </template>
-        </el-menu>
-    </div>
+  <nav class="side-menu">
+    <ul class="nav">
+      <li :class="{'active': selected===item.text}" v-for="item in menus" @click="clickMenuItem(item)"><a>{{item.text}}</a></li>
+    </ul>
+  </nav>
 </template>
-
 <script>
-    export default {
-        data() {
-            return {
-                items: [
-                    {
-                        index: 'readme',
-                        title: '自述'
-                    },
-                    {
-                        index: '2',
-                        title: '表格数据',
-                        subs: [
-                            {
-                                index: 'basetable',
-                                title: '基础表格'
-                            }
-                        ]
-                    },
-                    {
-                        index: '3',
-                        title: '操作',
-                        subs: [
-                            {
-                                index: 'baseform',
-                                title: '新建数据'
-                            },
-                        ]
-                    },
-                    {
-                        index: '4',
-                        title: '图表',
-                        subs: [
-                            {
-                                index: 'basecharts',
-                                title: '基础图表'
-                            }
-                        ]
-                    },
-                    {
-                        index: '5',
-                        title: '系统管理',
-                        subs: [
-                            {
-                                index: 'users',
-                                title: '用户管理'
-                            }
-                        ]
-                    }
-                ]
-            };
-        },
-        computed:{
-            onRoutes(){
-                return this.$route.path.replace('/','');
-            }
+  export default {
+    data () {
+      return {
+        menus: [{
+          text: '首页',
+          name: 'home'
+        }, {
+          text: '测试1',
+          name: 'test1'
+        }, {
+          text: '测试2',
+          name: 'test2'
+        }, {
+          text: '异步组件',
+          name: 'async'
+        }, {
+          text: '设置',
+          name: 'setting'
+        }],
+        selected: '管理'
+      };
+    },
+    created () {
+      this.$taber.$on('vue-tabs-active-change', (tab) => {
+        if (tab) {
+          this.selected = tab.meta.title;
+        } else {
+          this.selected = null;
         }
-    };
+      });
+    },
+    methods: {
+      clickMenuItem (item) {
+        this.selected = item.text;
+        this.$taber.open({
+          name: item.name,
+          params: {
+            title: item.text
+          }
+        });
+      }
+    }
+  };
 </script>
-
-<style scoped>
-    .sidebar{
+<style lang="scss">
+  .side-menu {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    left: 0px;
+    top: 1px;
+    background-color: #2f4050;
+    color: #a7b1c2;
+    .nav {
+      list-style: none;
+      padding: 0px;
+      > li.active {
+        color: #fff;
+      }
+      > li > a {
+        padding: 4px 10px 4px 40px;
         display: block;
-        position: absolute;
-        width: 250px;
-        left: 0;
-        top: 70px;
-        bottom:0;
-        background: #2E363F;
+        text-align: left;
+        &:hover {
+          cursor: pointer;
+          color: #fff;
+        }
+      }
     }
-    .sidebar > ul {
-        height:100%;
-    }
+  }
 </style>

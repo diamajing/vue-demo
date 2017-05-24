@@ -6,7 +6,9 @@
         <el-breadcrumb-item>基础表格</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-
+    <div class="funKey">
+      <el-button type="primary" @click="handleNew()">新建</el-button>
+    </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="takeOffDate" label="出发日期" sortable width="150">
       </el-table-column>
@@ -20,7 +22,7 @@
       <el-table-column label="操作" width="180">
         <template scope="scope">
           <el-button size="small"
-                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                     @click="handleEdit(scope.$index, scope.row.routno)">编辑</el-button>
           <el-button size="small" type="danger"
                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
@@ -73,15 +75,29 @@
 //              this.$store.commit("hideLoading");
           });
       },
-      handleEdit(index, row) {
-          console.log(index,row);
-        this.$message('编辑第'+(index+1)+'行');
-
+      handleEdit(routno) {
+        this.$router.push({
+          name:"baseform",
+          params:{orderId:routno}
+        });
+      },
+      handleNew() {
+        this.$router.push({
+          name:"baseform",
+          params:{orderId:'new'}
+        });
       },
       handleDelete(index, row) {
-        console.log(index,row);
         this.$message.error('删除第'+(index+1)+'行');
+        this.tableData.remove(row);
       }
     }
   };
 </script>
+<style>
+  .funKey{
+    margin: 20px 0;
+  }
+</style>
+
+
