@@ -1,6 +1,9 @@
 <template>
     <div class="header">
         <div class="logo">后台管理系统</div>
+        <el-button type="primary" size="small" @click.native="toggleSidebar">
+          <i class="fa fa-bars"></i>
+        </el-button>
         <div class="user-info">
             <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
@@ -29,11 +32,17 @@
             }
         },
         methods:{
+            toggleSidebar(){
+              this.$store.commit("toggleSidebar");
+            },
             handleCommand(command) {
                 if (command === 'loginout'){
                   Session.clearAll('sys_username');
                     this.$router.push('/login');
                 }
+            },
+            showLoading(){
+              this.$store.commit("showLoading");
             }
         }
     };

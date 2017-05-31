@@ -3,6 +3,8 @@
 import Vue from 'vue';
 import App from './App';
 import vuexStore from './store/store';
+import Taber from './plugin/vue-tabs/VueTaber';
+import tabRouterMap from './tabRouter';
 
 // 引入vue-router
 import Router from 'vue-router';
@@ -12,6 +14,14 @@ import routerMap from './router';
 Vue.use(Router);
 // 路由表引入
 const router = new Router(routerMap);
+
+
+
+/* tab路由配置 */
+Vue.use(Taber);
+const taber = new Taber({
+  tabs:tabRouterMap
+});
 
 Vue.config.productionTip = false;
 import VueResource from 'vue-resource';// 引入vue-resource
@@ -39,5 +49,6 @@ window.vueApp = new Vue({
   template: '<App/>',
   components: {App},
   router,
+  taber,
   store
 });

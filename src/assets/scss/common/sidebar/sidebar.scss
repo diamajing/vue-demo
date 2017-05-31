@@ -1,0 +1,131 @@
+@import "~assets/scss/common/variables.scss";
+@import "~assets/scss/common/mixin.scss";
+
+.sidebar-wapper{
+	//position: absolute;
+	position: fixed;
+	top: 0;
+	left: 0;
+	//padding-top: 50px;
+	min-height: 100%;
+	width: $sidebar-width;
+	z-index: 810;
+	height: 100%;
+	background-color: $sidebar-dark;
+
+	//Using disposable variable to join statements with a comma
+	$transition-rule: $transition-speed $transition-fn,
+	width $transition-speed $transition-fn;
+	@include transition-transform($transition-rule);
+
+	@media (max-width: $screen-xs-max) {
+		@include translate(-$sidebar-width, 0);
+	}
+
+	&.sidebar-mini {
+		width: 70px;
+
+		.main-sidebar{
+		//.sidebar-collapse {
+			@media (min-width: $screen-sm) {
+				@include translate(-$sidebar-width, 0);
+			}
+		}
+
+		//.sidebar-open{
+		//	@media (max-width: $screen-xs-max) {
+		//		@include translate(0, 0);
+		//	}
+		//}
+	}
+
+	.img-circle {
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		background-color: #fff;
+	}
+}
+.sidebar {
+	padding-bottom: 10px;
+}
+// remove border from form
+.sidebar-form {
+	input:focus {
+		border-color: transparent!important;
+	}
+}
+// Sidebar menu
+.sidebar-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	//First Level
+	li {
+		position: relative;
+		margin: 0;
+		padding: 0;
+		a {
+			padding: 12px 5px 12px 20px;
+			display: block;
+			.fa,
+			.glyphicon,
+			.ion {
+				width: 20px;
+			}
+		}
+		.label,
+		.badge {
+			margin-top: 3px;
+			margin-right: 5px;
+		}
+	}
+	li.header {
+		padding: 10px 25px 10px 15px;
+		font-size: 12px;
+	}
+	li a .fa-angle-left {
+		width: auto;
+		height: auto;
+		padding: 0;
+		margin-right: 10px;
+		margin-top: 3px;
+	}
+	li.active {
+		a .fa-angle-left {
+			@include rotate(-90deg);
+		}
+		.treeview-menu {
+			display: block;
+		}
+	}
+
+	// Tree view menu
+	.treeview-menu {
+		display: none;
+		list-style: none;
+		padding:0;
+		margin:0;
+		padding-left: 5px;
+		.treeview-menu {
+			padding-left: 20px;
+		}
+		li {
+			margin: 0;
+			a {
+				padding: 5px 5px 5px 15px;
+				display: block;
+				font-size: 14px;
+				.fa,
+				.glyphicon,
+				.ion {
+					width: 20px;
+				}
+				.fa-angle-left,
+				.fa-angle-down {
+					width: auto;
+				}
+			}
+		}
+	}
+}

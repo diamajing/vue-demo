@@ -38,6 +38,8 @@ module.exports = {
     "comma-spacing": 'off',
     "space-infix-ops": 'off',
     "comma-dangle": 'off',
+    "brace-style": 'off',
+    "import/no-dynamic-require": 'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }

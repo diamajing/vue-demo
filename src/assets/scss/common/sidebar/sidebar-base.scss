@@ -1,0 +1,84 @@
+@import "~assets/scss/common/variables.scss";
+@import "~assets/scss/common/mixin.scss";
+
+$light-blue: #3c8dbc;  //Primary
+$link-color:       $light-blue;
+$link-hover-color: lighten($link-color, 15%);
+
+$link-hover-border-color: $light-blue;
+
+//Dark sidebar
+$sidebar-dark-bg:                  #222d32;
+$sidebar-dark-hover-bg:            darken($sidebar-dark-bg, 2%);
+$sidebar-dark-color:               lighten($sidebar-dark-bg, 60%);
+$sidebar-dark-hover-color:         #fff;
+$sidebar-dark-submenu-bg:          lighten($sidebar-dark-bg, 5%);
+$sidebar-dark-submenu-color:       lighten($sidebar-dark-submenu-bg, 40%);
+$sidebar-dark-submenu-hover-color: #fff;
+
+//Light sidebar
+$sidebar-light-bg:                  #f9fafc;
+$sidebar-light-hover-bg:            lighten(#f0f0f1, 1.5%);
+$sidebar-light-color:               #444;
+$sidebar-light-hover-color:         #000;
+$sidebar-light-submenu-bg:          $sidebar-light-hover-bg;
+$sidebar-light-submenu-color:       #777;
+$sidebar-light-submenu-hover-color: #000;
+
+//Sidebar Menu. First level links
+.sidebar-menu > li {
+	//Section Headning
+	&.header {
+		color: lighten($sidebar-dark-bg, 20%);
+		background: darken($sidebar-dark-bg, 4%);
+	}
+	//links
+	> a {
+		border-left: 3px solid transparent;
+	}
+	//Hover and active states
+	&:hover > a, &.active > a {
+		color: $sidebar-dark-hover-color;
+		background: $sidebar-dark-hover-bg;
+		border-left-color: $link-hover-border-color;
+	}
+	//First Level Submenu
+	> .treeview-menu {
+		margin: 0 1px;
+		background: $sidebar-dark-submenu-bg;
+	}
+}
+//All links within the sidebar menu
+.sidebar a {
+	color: $sidebar-dark-color;
+	text-decoration: none;
+	//&:hover {
+	//	text-decoration: none;
+	//}
+}
+//All submenus
+.treeview-menu {
+	> li {
+		> a {
+			color: $sidebar-dark-submenu-color;
+		}
+		&.active > a, > a:hover {
+			color: $sidebar-dark-submenu-hover-color;
+		}
+	}
+}
+.nav-header{
+	.profile-element{
+		display: block;
+	}
+	.logo-element{
+		display: none;
+	}
+}
+.logo-element {
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+	color: #ffffff;
+	padding: 18px 0;
+}

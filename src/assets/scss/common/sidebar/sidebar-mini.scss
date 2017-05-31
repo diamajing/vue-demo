@@ -1,0 +1,125 @@
+@import "~assets/scss/common/variables.scss";
+@import "~assets/scss/common/mixin.scss";
+
+.sidebar-mini {
+	@media (min-width: $screen-sm) {
+
+		&.sidebar-collapse {
+
+			.main-sidebar {
+				@include translate(0,0);
+				width: 70px!important;
+				z-index: 850;
+			}
+			.sidebar-menu {
+				li{
+					position: relative;
+					a{
+						margin-right: 0;
+					}
+					a span{
+						border-top-right-radius: 4px;
+					}
+
+					&:not(.treeview){
+						a span{
+							border-bottom-right-radius: 4px;
+						}
+					}
+					.treeview-menu{
+						padding-top: 5px;
+						padding-bottom: 5px;
+						border-bottom-right-radius: 4px;
+					}
+
+					&:hover{
+						a span:not(.pull-right),
+						.treeview-menu {
+							display: block!important;
+							position: absolute;
+							width: $sidebar-width - 70 + 30;
+							left: 70px;
+						}
+						a span {
+							top: 0;
+							margin-left: -2px;
+							padding: 12px 5px 12px 20px;
+							background-color: inherit;
+						}
+						.treeview-menu {
+							top: 49px;
+							margin-left: 0;
+						}
+					}
+				}
+			}
+			//Make the sidebar links, menus, labels, badges
+			//and angle icons disappear
+			.main-sidebar .user-panel > .info,
+			.sidebar-form,
+			.sidebar-menu > li > a > span,
+			.sidebar-menu > li > .treeview-menu,
+			.sidebar-menu >li > a > .pull-right,
+			.sidebar-menu li.header {
+				display: none!important;
+			}
+
+			.main-header {
+				//Let's make the logo also shrink and the mini logo to appear
+				.logo {
+					width: 50px;
+					> .logo-mini {
+						display: block;
+						margin-left: -15px;
+						margin-right: -15px;
+						font-size: 18px;
+					}
+					> .logo-lg {
+						display: none;
+					}
+				}
+
+				//Since the logo got smaller, we need to fix the navbar's position
+				.navbar {
+					margin-left: 50px;
+				}
+			}
+		}
+	}
+
+	.sidebar-scroll:hover{
+		overflow: visible!important;
+	}
+	.nav-header{
+		.profile-element{
+			display: none;
+		}
+		.logo-element{
+			display: block;
+		}
+	}
+}
+//A fix for text overflow while transitioning from sidebar mini to full sidebar
+.sidebar-menu,
+.main-sidebar .user-panel,
+.sidebar-menu li.header {
+	white-space: nowrap!important;
+	overflow: hidden;
+}
+.sidebar-menu:hover {
+	overflow: visible;
+}
+.sidebar-form,
+.sidebar-menu  li.header {
+	overflow: hidden;
+	text-overflow: clip;
+}
+.sidebar-menu li a {
+	position: relative;
+	.pull-right {
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		margin-top: -7px;
+	}
+}

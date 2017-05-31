@@ -21,7 +21,7 @@
   <script>
   import flightRes from "../../resource/flight/flight";
   import vHead from '../../components/Header.vue';
-  import vSidebar from '../../components/Sidebar';
+  import vSidebar from '../../components/mainSlider';
   export default {
     components: {vHead, vSidebar},
     methods: {

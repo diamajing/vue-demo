@@ -67,12 +67,12 @@
         };
         flightRes(this).owList(searchInfo)
           .then(function (data) {
-            self.tableData = data.flightList;
             this.$store.commit("hideLoading");
+            self.tableData = data.flightList;
           }).bind(this)
           .catch((err) => {
             console.log(err);
-//              this.$store.commit("hideLoading");
+              this.$store.commit("hideLoading");
           });
       },
       handleEdit(routno) {
