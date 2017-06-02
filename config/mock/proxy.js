@@ -2,20 +2,29 @@
 module.exports = {
 
 	/************** proxy *******************/
-	// http://114.55.138.53:9000
-	// order8050 flight8070 admin8040 approve9090 train8091 hotel8007 insurance8110 messagecenter8200 file8120
+	// http://172.20.19.14:8231/
+	//  地址
 
-	"/api/order/**": {
+	"/test/hello/**": {
 		type: 'proxy',
-		target: 'http://114.55.138.53:8050/',
+		target: 'http://172.20.19.14:8231/',
 		headers : {
 			'X-Real-IP' : '127.0.0.1'
 		},
 		pathRewrite: {
-			'^/api': '/'
+			'^/test': '/'
 		}
 	},
-
+  "/hello/**": {
+    type: 'proxy',
+    target: 'http://172.20.19.14:8231/',
+    headers : {
+      'X-Real-IP' : '127.0.0.1'
+    },
+    pathRewrite: {
+      '^': '/'
+    }
+  },
 	"/api/admin/**": {
 		type: 'proxy',
 		target: 'http://114.55.138.53:8040/',

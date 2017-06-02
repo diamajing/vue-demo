@@ -1,6 +1,7 @@
 
 var _ = require("lodash");
 var flight = require("./mock/flight.js");
+var proxy = require("./mock/proxy.js");
 
 
 /**
@@ -10,7 +11,7 @@ var flight = require("./mock/flight.js");
  */
 
 module.exports = {
-	mockType : 'local',
+	mockType : 'proxy',
 	table :   _.extend({},
     flight
   )

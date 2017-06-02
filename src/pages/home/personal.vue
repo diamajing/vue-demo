@@ -5,6 +5,7 @@
   <div class="wrapper">
       <v-head></v-head>
       <v-sidebar></v-sidebar>
+
       <div class="content">
         <transition name="move" mode="out-in"><router-view></router-view></transition>
         <!--<div style="text-align: center">-->
@@ -21,9 +22,10 @@
   <script>
   import flightRes from "../../resource/flight/flight";
   import vHead from '../../components/Header.vue';
-  import vSidebar from '../../components/mainSlider';
+  import vSidebar from '../../components/Sidebar.vue';
+  import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   export default {
-    components: {vHead, vSidebar},
+    components: {ElButton,vHead,vSidebar},
     methods: {
       loading(){
         this.$store.commit("show" +

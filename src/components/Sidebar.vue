@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar">
+    <el-button @click="submitTest()">点击测试</el-button>
     <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="dark" unique-opened router>
       <template v-for="item in items">
         <template v-if="item.subs">
@@ -21,7 +22,21 @@
 </template>
 
 <script>
+  import testRes from "../resource/test/flight";
   export default {
+    methods: {
+      submitTest:function () {
+        testRes(this).test()
+          .then(function (data) {
+            console.log(data);
+            this.$store.commit("hideLoading");
+          }).bind(this)
+          .catch((err) => {
+            console.log(err);
+//              this.$store.commit("hideLoading");
+          });
+      },
+    },
     data() {
       return {
         items: [
