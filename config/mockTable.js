@@ -13,6 +13,6 @@ var proxy = require("./mock/proxy.js");
 module.exports = {
 	mockType : 'proxy',
 	table :   _.extend({},
-    flight
+    flight,proxy
   )
 	};

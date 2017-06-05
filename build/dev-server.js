@@ -58,6 +58,7 @@ Object.keys(proxyTable).forEach(function (context) {
   }
 
   if (typeof options.target === 'string' && options.type === 'proxy' && (proxyType === 'all' || proxyType === 'proxy')) {
+    options.logLevel = 'debug';
     app.use(proxyMiddleware(context, options))
   }
   if (typeof options.target === 'string' && options.type === 'local' && (proxyType === 'all' || proxyType === 'local')) {

@@ -35,11 +35,14 @@
         :total="1">
       </el-pagination>
     </div>
+    <el-button @click="submitTest()">点击测试</el-button>
   </div>
 </template>
 
 <script>
   import flightRes from "../../resource/flight/flight";
+  import testRes from "../../resource/test/flight";
+
   export default {
     data() {
       return {
@@ -51,6 +54,17 @@
       this.getData();
     },
     methods: {
+      submitTest:function () {
+        testRes(this).test()
+          .then(function (data) {
+            console.log(data);
+            this.$store.commit("hideLoading");
+          }).bind(this)
+          .catch((err) => {
+            console.log(err);
+//              this.$store.commit("hideLoading");
+          });
+      },
       handleCurrentChange(val){
         this.cur_page = val;
         this.getData();

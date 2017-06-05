@@ -6,13 +6,12 @@
 
 module.exports = function(vm){
 	let resAddrother = {
-		// 查询国内单程航班信息
-		owList: {method: 'GET', url: 'test/hello/'},
+		test: {method: 'GET', url: 'FBdemo/hello'},
 	};
-	let resOther = vm.$resource('../test/hello/', {}, resAddrother);
+	let resOther = vm.$resource('/FBdemo/hello/', {}, resAddrother);
 	return {
 		test: function (params) {
-			return resOther.owList(params).then(function (response) {
+			return resOther.test(params).then(function (response) {
 				return response.json();
 			});
 		},

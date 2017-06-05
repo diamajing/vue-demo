@@ -20,6 +20,7 @@
   </div>
 </template>
   <script>
+
   import flightRes from "../../resource/flight/flight";
   import vHead from '../../components/Header.vue';
   import vSidebar from '../../components/Sidebar.vue';
