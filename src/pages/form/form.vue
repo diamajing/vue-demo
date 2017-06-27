@@ -67,12 +67,19 @@
         <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
+      <el-button @click="addSubmit()">增加测试</el-button>
+      <el-button @click="getInfo()">增加测试</el-button>
     </el-form>
   </div>
 </template>
 <script>
   import moment from "moment";
+//  import testRes from "../../resource/test/add";
+  import updateRes from "../../resource/test/Update";
+  import detailRes from "../../resource/test/getdetail";
+  import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   export default {
+    components: {ElButton},
     data() {
         let self = this;
       return {
@@ -122,17 +129,54 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let paramsId = this.$route.params.orderId === 'new'?'':this.$route.params.orderId;
+            console.log(paramsId);
+            //保存数据
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
+      getDate(){
+          //获取修改的数据
+      },
+      getInfo(){
+        let addList = {"id":33};
+        detailRes(this).test(addList)
+          .then(function () {
+            this.$store.commit("hideLoading");
+            this.$message.succeed('删除成功');
+          }).bind(this)
+          .catch((err) => {
+            console.log(err);
+//              this.$store.commit("hideLoading");
+          });
+      },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      addSubmit(){
+          let addList = {"id":33,"passWord":"3333333","info":"阿西吧","userName":"hehe2"};
+        updateRes(this).test(addList)
+          .then(function (data) {
+            this.$store.commit("hideLoading");
+            this.$message.succeed('删除成功');
+          }).bind(this)
+          .catch((err) => {
+            console.log(err);
+//              this.$store.commit("hideLoading");
+          });
       }
-    }
+    },
+    mounted(){
+        let params = this.$route.params.orderId;
+        if (params==='new'){
+           return;
+        } else {
+          this.getData(params);
+        }
+    },
   };
 </script>
 <style lang="scss" scoped>

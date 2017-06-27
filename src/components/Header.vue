@@ -1,9 +1,11 @@
 <template>
-    <div class="header">
-        <div class="logo">后台管理系统</div>
-        <el-button type="primary" size="small" @click.native="toggleSidebar">
-          <i class="fa fa-bars"></i>
-        </el-button>
+    <div class="header" :class="{'sidebar-mini':sidebarMini}">
+        <div class="logo">
+          <el-button type="primary" size="small" @click.native="toggleSidebar">
+            <i class="fa fa-bars"></i>
+          </el-button>
+          后台管理系统
+        </div>
         <div class="user-info">
             <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
@@ -26,15 +28,18 @@
             };
         },
         computed:{
+          sidebarMini(){
+            return this.$store.state.sidebarMini;
+          },
             username(){
                 let username =Session.get('sys_username');
                 return  username || this.name;
             }
         },
         methods:{
-            toggleSidebar(){
-              this.$store.commit("toggleSidebar");
-            },
+          toggleSidebar(){
+            this.$store.commit("toggleSidebar");
+          },
             handleCommand(command) {
                 if (command === 'loginout'){
                   Session.clearAll('sys_username');
@@ -47,16 +52,20 @@
         }
     };
 </script>
-<style scoped>
+<style rel="stylesheet/text" lang="scss" scoped>
     .header {
-        position: relative;
+        position: fixed;
         box-sizing: border-box;
-        width: 100%;
+        width: calc(100% - 220px);
         height: 70px;
         font-size: 22px;
         line-height: 70px;
         color: #fff;
+        z-index: 811;
         background-color: #3071a9;
+        &.sidebar-mini {
+           width: calc(100% - 70px);
+         }
     }
     .header .logo{
         float: left;

@@ -3,30 +3,35 @@
 		个人home页面
 	</div>-->
   <div class="wrapper">
-      <v-head></v-head>
       <v-sidebar></v-sidebar>
-
-      <div class="content">
-        <transition name="move" mode="out-in"><router-view></router-view></transition>
-        <!--<div style="text-align: center">-->
-          <!--<a><router-link to="/404">跳转到404</router-link></a>-->
-          <!--<el-button @click="loading">loading 按钮</el-button>-->
-          <!--<el-button @click="getFlightList()">resouce  mock 请求</el-button>-->
-          <!--<a><router-link to="/form">跳转到form页面</router-link></a>-->
-        <!--</div>-->
+    <div class="page-wrapper" :class="{'sidebar-mini':sidebarMini}">
+         <v-head></v-head>
+      <div class="pad_7">
+        <vue-tabs></vue-tabs>
       </div>
 
-
+    </div>
   </div>
 </template>
   <script>
 
   import flightRes from "../../resource/flight/flight";
-  import vHead from '../../components/Header.vue';
-  import vSidebar from '../../components/Sidebar.vue';
-  import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
+  import vHead from '../../components/Header';
+  import mainHead from '../../components/mainHeader';
+  import vSidebar from '../../components/mainSlider';
   export default {
-    components: {ElButton,vHead,vSidebar},
+    components: {vHead,vSidebar,mainHead},
+    computed:{
+      sidebarMini(){
+        return this.$store.state.sidebarMini;
+      }
+    },
+    mounted(){
+      this.$taber.open({
+        name: "list",
+        title: "基础数据"
+      });
+    },
     methods: {
       loading(){
         this.$store.commit("show" +
@@ -55,18 +60,33 @@
     }
   };
 </script>
-<style>
+<style rel="stylesheet/text" lang="scss" scoped>
+  @import "../../assets/scss/common/variables.scss";
+  @import "../../assets/scss/common/mixin.scss";
+  .page-wrapper {
+    margin: 0 0 0 220px;
+    &.sidebar-mini {
+      margin-left:70px;
+    }
+
+    $transition-rule: $transition-speed $transition-fn,
+    margin $transition-speed $transition-fn;
+    @include transition-transform($transition-rule);
+  }
   .content{
     background: none repeat scroll 0 0 #fff;
     position: absolute;
     left: 250px;
     right: 0;
-    top: 70px;
+    top: 130px;
     bottom:0;
     width: auto;
     padding:40px;
     box-sizing: border-box;
     overflow-y: scroll;
+  }
+  .pad_7{
+    padding-top: 70px;
   }
 </style>
 

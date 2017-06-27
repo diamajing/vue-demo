@@ -1,5 +1,5 @@
-@import "~assets/scss/common/variables.scss";
-@import "~assets/scss/common/mixin.scss";
+@import "../variables.scss";
+@import "../mixin.scss";
 
 .sidebar-mini {
 	@media (min-width: $screen-sm) {
@@ -47,7 +47,7 @@
 							background-color: inherit;
 						}
 						.treeview-menu {
-							top: 49px;
+							top: 44px;
 							margin-left: 0;
 						}
 					}

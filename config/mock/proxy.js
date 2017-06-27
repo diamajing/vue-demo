@@ -2,9 +2,9 @@
 module.exports = {
 
 	/************** proxy *******************/
-  //http://172.20.19.14:8524/FBdemo/hello
+  // http://172.20.19.14:8524/Test-1-Test/hello
 	//  地址
-  "/FBdemo/**": {
+  "/Test-1-Test/**": {
     type: 'proxy',
     target: 'http://172.20.19.14:8524/',
     headers : {
