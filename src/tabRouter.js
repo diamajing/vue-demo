@@ -6,7 +6,6 @@
 export default [{
   name: 'list',
   title: '数据展示',
-  locked:'true',
   component: function(resolve){
     require(['./pages/List/list.vue'], resolve);
   }

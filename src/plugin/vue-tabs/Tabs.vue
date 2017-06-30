@@ -452,7 +452,6 @@ export default {
                 }
             })
             store.save(consts.STORE_KEY, toSave);
-          store.save(consts.STORE_KEY, 'lllllll');
             store.save(consts.CURRENT_KEY, toSave.filter((item) => item.active === true)[0]);
         },
         toggleMore () {

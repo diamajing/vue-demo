@@ -20,7 +20,7 @@ export default {
 	},
 	state:{
 		sidebarMini:false,
-		pinTabs:[{name:"baseTabel"}]
+		pinTabs:[{name:"list"}]
 	},
 	mutations:{
 		toggleSidebar:function(state){

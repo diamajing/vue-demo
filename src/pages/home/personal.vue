@@ -27,11 +27,6 @@
       }
     },
     mounted(){
-      this.$taber.open({
-        active:true,
-        name: "list",
-        title: "基础数据"
-      });
     },
     methods: {
       loading(){
@@ -39,7 +34,7 @@
           "Loading");
       },
       getFlightList(){
-        this.$store.commit("showLoading");
+//        this.$store.commit("showLoading");
           let searchInfo = {
             searchType: "ow",
             takeOffStn: "PEK",
