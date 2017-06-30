@@ -1,32 +1,32 @@
-import TabsView from './Tabs.vue';
+import TabsView from './Tabs.vue'
 export default function install (Vue) {
     if (install.installed) {
-        return;
+        return
     }
-    install.installed = true;
+    install.installed = true
 
     Object.defineProperty(Vue.prototype, '$taber', {
         get () {
-            return this.$root._taber;
+            return this.$root._taber
         }
-    });
+    })
 
     Object.defineProperty(Vue.prototype, '$tab', {
         get () {
-            return this.$options.$tab;
+            return this.$options.$tab
         }
-    });
+    })
 
-    TabsView.methods.getVue = () => Vue;
-    Vue.component('VueTabs', TabsView);
+    TabsView.methods.getVue = () => Vue
+    Vue.component('VueTabs', TabsView)
 
     Vue.mixin({
         beforeCreate () {
             if (this.$options.taber) {
-                this._taber = this.$options.taber;
+                this._taber = this.$options.taber
             } else if (this.$options.__taber) {
-                this._taber = this.$options.__taber;
+                this._taber = this.$options.__taber
             }
         }
-    });
+    })
 }

@@ -182,7 +182,9 @@
         }
       },
       goto: function (name) {
-        this.$taber.open(name);
+        this.$taber.open({
+          name:name
+        });
       },
     },
   };

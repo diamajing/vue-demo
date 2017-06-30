@@ -1,3 +1,7 @@
+/**
+ * Created by liuyue on 2016/12/28.
+ */
+
 export default {
 	state:{
 		showLoading:false,
@@ -18,5 +22,5 @@ export default {
 		}
 	},
 	getters:{},
-	actions:{}
+	actions:{},
 };

@@ -28,6 +28,7 @@
     },
     mounted(){
       this.$taber.open({
+        active:true,
         name: "list",
         title: "基础数据"
       });

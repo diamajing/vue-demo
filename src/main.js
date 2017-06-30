@@ -20,7 +20,8 @@ const router = new Router(routerMap);
 /* tab路由配置 */
 Vue.use(Taber);
 const taber = new Taber({
-  tabs:tabRouterMap
+  tabs:tabRouterMap,
+  persist:true
 });
 
 Vue.config.productionTip = false;

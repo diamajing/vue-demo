@@ -6,6 +6,7 @@
 export default [{
   name: 'list',
   title: '数据展示',
+  locked:'true',
   component: function(resolve){
     require(['./pages/List/list.vue'], resolve);
   }
@@ -32,5 +33,11 @@ export default [{
   title: '图表',
   component: function(resolve){
     require(['./pages/chart/chart.vue'], resolve);
+  }
+},{
+  name: 'tabelModify',
+  title: '基础表格',
+  component: function(resolve){
+    require(['./pages/form/modifyForm.vue'], resolve);
   }
 }];

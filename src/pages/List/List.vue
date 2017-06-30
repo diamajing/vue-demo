@@ -10,7 +10,7 @@
       <el-button type="primary" @click="handleNew()">新建</el-button>
     </div>
     <el-table :data="dataInfo" border style="width: 100%">
-      <el-table-column prop="userName" label="用户名">
+      <el-table-column prop="userName" label="用户名"sortable >
       </el-table-column>
       <el-table-column prop="info" label="用户信息">
       </el-table-column>
@@ -24,7 +24,7 @@
       <el-table-column label="操作">
         <template scope="scope">
           <el-button size="small"
-                     @click="handleEdit(scope.$index,scope.row.routno)">编辑</el-button>
+                     @click="handleEdit(scope.row.id,scope.row.routno)">编辑</el-button>
           <el-button size="small" type="danger"
                      @click="handleDelete(scope.$index, scope.row.id)">删除</el-button>
         </template>
@@ -37,7 +37,6 @@
         :total="1">
       </el-pagination>
     </div>-->
-    <el-button @click="submitDEl()">点击删除</el-button>
   </div>
 </template>
 
@@ -93,42 +92,39 @@
             self.tableData = data.flightList;
           }).bind(this)
           .catch((err) => {
-            console.log(err,'ldsksld');
+            console.log(err);
               this.$store.commit("hideLoading");
           });
       },
       handleEdit(routno) {
-          this.$taber.open('baseTabel');
-          this.$router.push({
-            name:"baseform",
-            params:{orderId:routno}
+          this.$taber.open({
+            name: 'tabelModify',
+            key: routno,
+            title:`修改(${routno})`,
+            data:{
+              routno
+            }
           });
-          //修改后台请求
       },
       handleNew() {
         this.$taber.open('baseTabel');
-        this.$router.push({
-          name:"baseform",
-          params:{orderId:'new'}
-        });
       },
       handleDelete(index, id) {
-//        this.$message.error('删除失败');
-        this.dataInfo.splice(index, 1);
+        this.$store.commit("showLoading");
         delRes(this).test({'id':id})
           .then(function (data) {
+            this.dataInfo.splice(index, 1);
             this.$store.commit("hideLoading");
-            this.$message.succeed('删除成功');
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            });
           }).bind(this)
           .catch((err) => {
+            this.$message.error('删除失败');
             console.log(err);
 //              this.$store.commit("hideLoading");
           });
-//        console.log(id);
-//        console.log(index,row);
-//        console.log()
-//       this.delete(this.dataInfo,row);
-//        this.tableData.$remove(row);
       }
     }
   };

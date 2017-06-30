@@ -1,152 +1,155 @@
-import {isString, isFunction, store, consts} from './utils';
-import install from './install';
+import {isString, isFunction, store, consts} from './utils'
+import install from './install'
 
-const allEvents = ['vue-tabs-close', 'vue-tabs-active-change'];
+const allEvents = ['vue-tabs-close', 'vue-tabs-active-change']
 export default class VueTaber {
     constructor (options) {
-        const {tabs: ops_tabs, persist} = options;
-        this._tabsMap = {};
+        const {tabs: ops_tabs, persist} = options
+        this._tabsMap = {}
         ops_tabs.forEach((tab) => {
-            this._tabsMap[tab.name] = tab;
-        });
+            this._tabsMap[tab.name] = tab
+        })
 
-        this.beforeCreateHooks = [];
-        this.beforeCloseHooks = [];
+        this.beforeCreateHooks = []
+        this.beforeCloseHooks = []
 
-        this._events = {};
-        this.persist = persist;
+        this._events = {}
+        this.persist = persist
     }
 
     findTab (tab) {
         if (!tab) {
-            return null;
+            return null
         }
-        let name;
+        let name
         if (isString(tab)) {
-            name = tab;
+            name = tab
         } else {
-            name = tab.name;
+            name = tab.name
         }
-        return this._tabsMap[name];
+        return this._tabsMap[name]
     }
 
     open (tab) {
         if (isString(tab)) {
-            tab = {name: tab};
+            tab = {name: tab}
         }
-        let meta = this.findTab(tab);
+        let meta = this.findTab(tab)
         if (!meta) {
-            console.error(`The Tab [${tab.name}] is not defined!`);
-            return;
+            console.error(`The Tab [${tab.name}] is not defined!`)
+            return
         }
-        tab.meta = meta;
-        const findedTab = this.vm.findOpenTab(tab.name, tab.key);
+        tab.meta = meta
+        const findedTab = this.vm.findOpenTab(tab.name, tab.key)
         if (!findedTab) {
-            this.vm.create(tab);
+            this.vm.create(tab)
         } else {
-            this.vm.select(findedTab);
+            this.vm.select(findedTab)
         }
     }
 
     close (tab) {
         if (isString(tab)) {
-            tab = {name: tab};
+            tab = {name: tab}
         }
-        let meta = this.findTab(tab);
+        let meta = this.findTab(tab)
         if (!meta) {
-            console.error(`The Tab [${tab.name}] is not defined!`);
-            return;
+            console.error(`The Tab [${tab.name}] is not defined!`)
+            return
         }
-        tab.meta = meta;
-        const findedTab = this.vm.findOpenTab(tab.name, tab.key);
-        this.vm.close(findedTab);
+        tab.meta = meta
+        const findedTab = this.vm.findOpenTab(tab.name, tab.key)
+        this.vm.close(findedTab)
     }
 
     select (tab) {
         if (isString(tab)) {
-            tab = {name: tab};
+            tab = {name: tab}
         }
-        const findedTab = this.vm.findOpenTab(tab.name, tab.key);
-        this.vm.select(findedTab);
+        const findedTab = this.vm.findOpenTab(tab.name, tab.key)
+        this.vm.select(findedTab)
     }
 
     $on (event, call) {
         if (!event || !isFunction(call)) {
-            console.error('$on error event:[' + event + '], call:' + call);
-            return;
+            console.error('$on error event:[' + event + '], call:' + call)
+            return
         }
         if (!this._events[event]) {
-            this._events[event] = [];
+            this._events[event] = []
         }
-        this._events[event].push(call);
+        this._events[event].push(call)
     }
 
     $off (event, call) {
         if (!event) {
-            return;
+            return
         }
-        const listeners = this._events[event] || [];
+        const listeners = this._events[event] || []
         if (call) {
-            const index = listeners.indexOf(call);
+            const index = listeners.indexOf(call)
             if (index !== -1) {
-                listeners.splice(index, 1);
+                listeners.splice(index, 1)
             }
         } else {
-            this._events[event] = [];
+            this._events[event] = []
         }
     }
 
     beforeCreateEach (fn) {
         if (!isFunction(fn)) {
-            return;
+            return
         }
-        this.beforeCreateHooks.push(fn);
+        this.beforeCreateHooks.push(fn)
     }
 
     beforeCloseEach (fn) {
         if (!isFunction(fn)) {
-            return;
+            return
         }
-        this.beforeCloseHooks.push(fn);
+        this.beforeCloseHooks.push(fn)
     }
 
     _restoreTabs () {
         if (!this.persist) {
-            return;
+            return
         }
-        const storeTabs = store.get(consts.STORE_KEY);
-        if (!storeTabs) {
-            return;
+
+        let pinTabs = store.get(consts.PIN_KEY) || [];
+        let currentTab = store.get(consts.CURRENT_KEY);
+
+        const storeTabs = currentTab ? pinTabs.concat(currentTab) : pinTabs;
+        if (storeTabs && storeTabs.length) {
+			storeTabs.forEach((tab) => {
+				this.open(tab)
+			})
         }
-        storeTabs.forEach((tab) => {
-            this.open(tab);
-        });
     }
 
     mounted () {
-        this._restoreTabs();
+        this._restoreTabs()
     }
 
     set vm (vm) {
-        this._vm = vm;
-        const _this = this;
+        this._vm = vm
+        const _this = this
         allEvents.forEach((event) => {
             vm.$on(event, (...args) => {
-                const listeners = this._events[event] || [];
+                const listeners = this._events[event] || []
                 listeners.forEach((listener) => {
-                    listener.apply(_this, args);
-                });
-            });
-        });
+                    listener.apply(_this, args)
+                })
+            })
+        })
     }
 
     get vm () {
-        return this._vm;
+        return this._vm
     }
 }
 
-VueTaber.install = install;
+VueTaber.install = install
 
 if (window.Vue) {
-    window.Vue.use(VueTaber);
+    window.Vue.use(VueTaber)
 }

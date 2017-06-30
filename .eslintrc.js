@@ -40,6 +40,11 @@ module.exports = {
     "comma-dangle": 'off',
     "brace-style": 'off',
     "import/no-dynamic-require": 'off',
+    "semi":'off',
+    "camelcase":'off',
+    "no-mixed-spaces-and-tabs":'off',
+    "no-inner-declarations":"off",
+    "eol-last":"off",
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
