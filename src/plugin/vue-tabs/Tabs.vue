@@ -327,12 +327,9 @@ export default {
                     this.$set(tab, 'loading', false)
                 })
                 tab.promise = p;
-                console.log(tab.active);
                 if (tab.active !== false) {
-                    console.log('1111111111');
                     this.select(tab)
                 } else {
-                  console.log('33333333333');
                     this._saveTabs()
                 }
                 const id = tabIdGen(tab.name, tab.key)
@@ -389,10 +386,8 @@ export default {
 					_this.$set(tab, 'loading', false)
 				})
 				tab.promise = p
-        console.log(tab.active,'lkjjjii');
 				if (tab.active !== false) {
 					_this.select(tab)
-          console.log('lkkkkk');
 				} else {
 					_this._saveTabs()
 				}
@@ -438,7 +433,6 @@ export default {
             })
         },
         _saveTabs () {
-            console.log('kkkkkkk',(this.$taber));
             if (!this.$taber.persist) {
                 return
             }

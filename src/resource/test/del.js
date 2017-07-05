@@ -6,9 +6,9 @@
 
 module.exports = function(vm){
   let resAddrother = {
-    test: {method: 'GET', url: 'Test-1-Test/deleteInfo'},
+    test: {method: 'GET', url: 'Test-1-Test/info/deleteInfo'},
   };
-  let resOther = vm.$resource('/Test-1-Test/deleteInfo', {}, resAddrother);
+  let resOther = vm.$resource('/Test-1-Test/info/deleteInfo', {}, resAddrother);
   return {
     test: function (params) {
       return resOther.test(params).then(function (response) {

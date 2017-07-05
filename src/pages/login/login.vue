@@ -18,7 +18,8 @@
   </div>
 </template>
 <script>
-  import Session from "../../utils/session";
+  import  _Session from "../../utils/session";
+  import loginRes from "../../resource/test/login";
   export default {
     data(){
           return {
@@ -41,11 +42,31 @@
           let self = this;
           this.$refs[name].validate((valid) => {
             if (valid) {
-              Session.set('sys_username',self.ruleForm.username);
+              _Session.set('sys_username',self.ruleForm.username);
+              this.$store.commit("showLoading");
 //              后台接口验证
 //              成功跳页，不成功弹提示信息，返回一个token ，本地缓存token
-//              _Session.set('token',token);
-              self.$router.push('/readme');
+              let searchInfo ={
+                name:self.ruleForm.username,
+                password:self.ruleForm.password
+              }
+              loginRes(this).test(searchInfo)
+                .then(function (data) {
+                  console.log('kdskkdkdd');
+                  this.$store.commit("hideLoading");
+                  _Session.set('token',data.token);
+//                  this.$router.go({
+//                    name: "readme",
+//                    query: _.extend({}, this.$route.query, query, {})
+//                  });
+                  self.$router.push('/readme');
+                }).bind(this)
+                .catch((err) => {
+                  console.log(err);
+              this.$store.commit("hideLoading");
+              this.$message.error('用户名密码有误');
+                });
+//              self.$router.push('/readme');
             }  else {
              console.log('error submit!!');
               return false;

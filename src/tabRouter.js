@@ -5,13 +5,14 @@
 
 export default [{
   name: 'list',
+  locked:true,
   title: '数据展示',
   component: function(resolve){
     require(['./pages/List/list.vue'], resolve);
   }
 },{
 	name: 'baseTabel',
-	title: '基础表格',
+	title: ' 新建用户',
 	component: function(resolve){
 		require(['./pages/form/form.vue'], resolve);
 	}
@@ -35,7 +36,7 @@ export default [{
   }
 },{
   name: 'tabelModify',
-  title: '基础表格',
+  title: '修改信息',
   component: function(resolve){
     require(['./pages/form/modifyForm.vue'], resolve);
   }

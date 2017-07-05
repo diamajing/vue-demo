@@ -81,16 +81,14 @@
         <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
-      <el-button @click="addSubmit()">增加测试</el-button>
-      <el-button @click="getInfo()">增加测试</el-button>
     </el-form>
   </div>
 </template>
 <script>
 //  import moment from "moment";
 //  import testRes from "../../resource/test/add";
-  import updateRes from "../../resource/test/Update";
-  import detailRes from "../../resource/test/getdetail";
+  import addRes from "../../resource/test/add";
+//  import detailRes from "../../resource/test/getdetail";
   export default {
     components: {},
     data() {
@@ -155,53 +153,39 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              this.modifySubmit();
+              this.addSubmit();
           }
         });
-      },
-      getInfo(params){
-        let addList = {"id":params};
-        this.$store.commit("showLoading");
-        detailRes(this).test(addList)
-          .then(function (data) {
-            this.$store.commit("hideLoading");
-            this.ruleForm.userName = data.username;
-            this.ruleForm.userInfo = data.info;
-          }).bind(this)
-          .catch((err) => {
-            console.log(err);
-//              this.$store.commit("hideLoading");
-          });
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-     modifySubmit(paramsId){
-          let addList = {"id":paramsId,"passWord":"3333333","info":"阿西吧","userName":"hehe2"};
+     addSubmit(paramsId){
+          let addList = {"id":"","passWord":"123456","info":this.ruleForm.userName,"userName":this.ruleForm.userInfo};
           this.$store.commit("showLoading");
-        updateRes(this).test(addList)
+       addRes(this).test(addList)
           .then(function (data) {
             this.$store.commit("hideLoading");
             this.$message({
-              message: '修改成功',
+              message: '新增用户成功',
               type: 'success'
+            });
+            this.$taber.open({
+              name:'list',
             });
           }).bind(this)
           .catch((err) => {
-            console.log(err);
-            this.$message.error('修改失败');
-//              this.$store.commit("hideLoading");
+            if (err.status === 401) {
+              this.$store.commit("hideLoading");
+              this.$message.error('登陆超时,重新登陆');
+              this.$router.push({name:'home'});
+            } else {
+              this.$message.error('新增用户失败');
+            }
           });
       }
     },
-    mounted(){
-        let params = this.$route.params.orderId;
-        if (params==='new'){
-
-        } else {
-          this.getInfo(params);
-        }
-    },
+    mounted(){},
   };
 </script>
 <style lang="scss" scoped>

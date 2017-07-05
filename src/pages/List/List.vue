@@ -60,14 +60,19 @@
     },
     methods: {
       submitTest:function () {
+        this.$store.commit("showLoading");
         testRes(this).test()
           .then(function (data) {
            this.dataInfo = data.List;
             this.$store.commit("hideLoading");
           }).bind(this)
           .catch((err) => {
-            console.log(err);
-//              this.$store.commit("hideLoading");
+//            console.log(err);
+            if (err.status === 401) {
+                this.$store.commit("hideLoading");
+                this.$message.error('登陆超时,重新登陆');
+                this.$router.push({name:'home'});
+            }
           });
       },
       submitDEl:function () {
@@ -126,7 +131,7 @@
 //              this.$store.commit("hideLoading");
           });
       }
-    }
+    },
   };
 </script>
 <style>

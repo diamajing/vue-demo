@@ -85,15 +85,16 @@
   </div>
 </template>
 <script>
-  //  import moment from "moment";
+  import  _Session from "../../utils/session";
   //  import testRes from "../../resource/test/add";
-  import updateRes from "../../resource/test/Update";
   import detailRes from "../../resource/test/getdetail";
+  import updateRes from "../../resource/test/Update";
   export default {
     components: {},
     data() {
 //        let self = this;
       return {
+        paramsId: _Session.get('$CURRENT_TAB').data.routno ?_Session.get('$CURRENT_TAB').data.routno:null,
 //          开始结束时间的控制
 //        takeOffOptions: {
 //          disabledDate(time) {
@@ -153,14 +154,8 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            let paramsId = this.$route.params.orderId === 'new' ? '' : this.$route.params.orderId;
-            if (paramsId === 'new') {
-//            console.log(paramsId);
-              //保存数据
-            } else {
-              console.log('error submit!!');
-              this.modifySubmit(paramsId);
-            }
+//            let paramsId =  _Session.get('$CURRENT_TAB').data.routno ?_Session.get('$CURRENT_TAB').data.routno:null;
+             this.modifySubmit(this.paramsId);
           }
         });
       },
@@ -174,15 +169,21 @@
             this.ruleForm.userInfo = data.info;
           }).bind(this)
           .catch((err) => {
-            console.log(err);
-//              this.$store.commit("hideLoading");
+            if (err.status === 401) {
+              this.$store.commit("hideLoading");
+              this.$message.error('登陆超时,重新登陆');
+              this.$router.push({name:'home'});
+            } else {
+              this.$message.error('查询失败');
+            }
+            this.$store.commit("hideLoading");
           });
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
       modifySubmit(paramsId){
-        let addList = {"id":paramsId,"passWord":"3333333","info":"阿西吧","userName":"hehe2"};
+        let addList = {"id":paramsId,"passWord":"","info": this.ruleForm.userInfo,"userName": this.ruleForm.userName};
         this.$store.commit("showLoading");
         updateRes(this).test(addList)
           .then(function (data) {
@@ -191,18 +192,26 @@
               message: '修改成功',
               type: 'success'
             });
+            this.$taber.open({
+              name:'list',
+            });
           }).bind(this)
           .catch((err) => {
             console.log(err);
-            this.$message.error('修改失败');
+            if (err.status === 401) {
+              this.$store.commit("hideLoading");
+              this.$message.error('登陆超时,重新登陆');
+              this.$router.push({name:'home'});
+            } else {
+              this.$message.error('修改失败');
+            }
+            this.$store.commit("hideLoading");
 //              this.$store.commit("hideLoading");
           });
       }
     },
     mounted(){
-        console.log(333);
-        console.log("444",this.$taber);
-//      this.getInfo(params);
+      this.getInfo(this.paramsId);
     },
   };
 </script>

@@ -31,7 +31,7 @@ export default function (App) {
 					App.$store.state.loginmini.showLogin = true;
 				} else {
 					App.$notify.error({
-						title: '提示',  // response.status
+						title: '请求出错',  // response.status
 						message: response.body.error
 					});
 				}
@@ -41,9 +41,10 @@ export default function (App) {
 
 	// 添加token认证
 	let tokenAuth = (request, next) => {
-		if (SessionUtil.get('baseAccountVO') && SessionUtil.get('baseAccountVO').token){
+		// if (SessionUtil.get('token') && SessionUtil.get('baseAccountVO').token){
+		if (SessionUtil.get('token')){
 			// request.headers.token = `${SessionUtil.get('baseAccountVO').token}`;
-			request.headers.set('token',`${SessionUtil.get('baseAccountVO').token}`);
+			request.headers.set('token',`${SessionUtil.get('token')}`);
 		} else {
 			request.headers.set('token',"null");
 		}

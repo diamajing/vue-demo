@@ -9,6 +9,7 @@ export default {
       redirect: '/login/login.vue'
     },
     {
+      name: 'readme', // 登录页
       path: '/readme',
       component: resolve => require(['./pages/home/personal.vue'], resolve),
       children:[
