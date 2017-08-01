@@ -45,6 +45,7 @@ module.exports = {
     "no-mixed-spaces-and-tabs":'off',
     "no-inner-declarations":"off",
     "eol-last":"off",
+    "sort-imports":"off",
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
